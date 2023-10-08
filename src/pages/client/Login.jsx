@@ -1,45 +1,58 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const Login = () => {
+  // deklarasi navigate
   let navigate = useNavigate();
 
+  // inisialisasi state input
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
 
-  const handleInput = (event) => {
+  // handle input change
+  const handleInputChange = (event) => {
     let value = event.target.value;
     let name = event.target.name;
 
     setInput({ ...input, [name]: value });
   };
 
-  const handleLogin = (event) => {
-    event.preventDefault();
+  const handleLogin = async (event) => {
+    try {
+      //
+      event.preventDefault();
 
-    let { email, password } = input;
-    console.log(input);
+      // destructuring assignment
+      const { email, password } = input;
 
-    axios
-      .post("https://dev-example.sanbercloud.com/api/login", {
-        email,
-        password,
-      })
-      .then((res) => {
-        console.log(res);
-        let data = res.data;
-        Cookies.set("token", data.token, { expires: 1 });
-        navigate("/");
-      })
+      // mengirim permintaan login ke server
+      const response = await axios.post(
+        "https://dev-example.sanbercloud.com/api/login",
+        {
+          email,
+          password,
+        }
+      );
 
-      .catch((error) => {
-        console.log(error);
-        alert(error.message);
-      });
+      // mencetak response dari server
+      console.info(response.data);
+
+      // mengambil dan menyimpan token kedalam cookie (library cookie js)
+      const { token } = response.data;
+      Cookies.set("token", token, { expires: 1 });
+
+      // navigasi ke halaman beranda
+      navigate("/");
+
+      // handling error
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Login failed. Please check your credentials and try again.");
+    }
   };
 
   return (
@@ -57,7 +70,7 @@ const Login = () => {
               <form onSubmit={handleLogin} className="flex flex-col gap-3">
                 <input
                   value={input.email}
-                  onChange={handleInput}
+                  onChange={handleInputChange}
                   type="text"
                   name="email"
                   placeholder="Email"
@@ -65,7 +78,7 @@ const Login = () => {
                 />
                 <input
                   value={input.password}
-                  onChange={handleInput}
+                  onChange={handleInputChange}
                   type="password"
                   name="password"
                   className="border px-4 py-2 w-full lg:w-72 rounded-md"

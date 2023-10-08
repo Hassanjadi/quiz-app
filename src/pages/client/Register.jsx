@@ -5,43 +5,58 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Register = () => {
+  // deklarasi navigate
   let navigate = useNavigate();
+
+  // inisialisasi state input
   const [input, setInput] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  const handleInput = (event) => {
+  // handle input change
+  const handleInputRegister = (event) => {
     let value = event.target.value;
     let name = event.target.name;
 
     setInput({ ...input, [name]: value });
   };
 
-  const handleRegister = (event) => {
-    event.preventDefault();
+  const handleRegister = async (event) => {
+    try {
+      event.preventDefault();
 
-    let { name, email, password } = input;
-    console.log(input);
+      // destructuring assignment
+      const { name, email, password } = input;
 
-    axios
-      .post("https://dev-example.sanbercloud.com/api/register", {
-        name,
-        email,
-        password,
-      })
-      .then((res) => {
-        console.log(res);
-        let data = res.data;
-        Cookies.set("token", data.token, { expires: 1 });
-        navigate("/login");
-      })
+      // mengirim permintaan login ke server
+      const response = await axios.post(
+        "https://dev-example.sanbercloud.com/api/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
-      .catch((error) => {
-        console.log(error);
-        alert(error.message);
-      });
+      // mencetak response dari server
+      console.log(response.data);
+
+      // mengambil dan menyimpan token kedalam cookie (library cookie js)
+      const { token } = response.data;
+      Cookies.set("token", token, { expires: 1 });
+
+      // navigasi ke halaman beranda
+      navigate("/login");
+
+      // handling error
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert(
+        "Registration failed. Please check your information and try again."
+      );
+    }
   };
 
   return (
@@ -56,7 +71,7 @@ const Register = () => {
             <form onSubmit={handleRegister} className="flex flex-col gap-4">
               <input
                 value={input.name}
-                onChange={handleInput}
+                onChange={handleInputRegister}
                 className="border px-4 py-2 w-72 rounded-md"
                 placeholder="Username"
                 name="name"
@@ -64,7 +79,7 @@ const Register = () => {
               />
               <input
                 value={input.email}
-                onChange={handleInput}
+                onChange={handleInputRegister}
                 className="border px-4 py-2 w-72 rounded-md"
                 placeholder="Email"
                 name="email"
@@ -72,7 +87,7 @@ const Register = () => {
               />
               <input
                 value={input.password}
-                onChange={handleInput}
+                onChange={handleInputRegister}
                 className="border px-4 py-2 w-72 rounded-md"
                 placeholder="Password"
                 name="password"

@@ -7,8 +7,9 @@ export const GlobalProvider = (props) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(600);
+  const [timeRemaining, setTimeRemaining] = useState(300);
 
+  // pindah soal
   const handleAnswerClick = (isCorrect) => {
     if (isCorrect) {
       setCorrectAnswers((prevCount) => prevCount + 1);
@@ -18,8 +19,8 @@ export const GlobalProvider = (props) => {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
+  // handle reset quiz
   const handleReset = () => {
-    // Reset state values to start the quiz again
     setData([]);
     setCurrentQuestionIndex(0);
     setCorrectAnswers(0);
