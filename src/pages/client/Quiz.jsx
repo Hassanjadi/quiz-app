@@ -18,7 +18,7 @@ const Quiz = () => {
 
   const { handleAnswerClick, handleReset } = handleFunction;
 
-  // fetching data api
+  // fetching data
   useEffect(() => {
     // asincronus
     const fetchData = async () => {
