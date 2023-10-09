@@ -18,4 +18,4 @@
 - [x] Memiliki timer dengan waktu pengerjaan 10 menit
 - [x] Menampilkan satu soal per satu halaman
 - [x] Menampilkan hasil pengerjaan kuis yang meliputi jumlah benar, jumlah salah, dan jumlah jawab saat kuis selesai atau ketika timer sudah habis
-- [ ] Simpan hasil pengerjaan di localstorage
+- [x] Simpan hasil pengerjaan di localstorage
