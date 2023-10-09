@@ -16,7 +16,7 @@ const Register = () => {
   });
 
   // handle input change
-  const handleInputRegister = (event) => {
+  const handleInput = (event) => {
     let value = event.target.value;
     let name = event.target.name;
 
@@ -71,7 +71,7 @@ const Register = () => {
             <form onSubmit={handleRegister} className="flex flex-col gap-4">
               <input
                 value={input.name}
-                onChange={handleInputRegister}
+                onChange={handleInput}
                 className="border px-4 py-2 w-72 rounded-md"
                 placeholder="Username"
                 name="name"
@@ -79,7 +79,7 @@ const Register = () => {
               />
               <input
                 value={input.email}
-                onChange={handleInputRegister}
+                onChange={handleInput}
                 className="border px-4 py-2 w-72 rounded-md"
                 placeholder="Email"
                 name="email"
@@ -87,7 +87,7 @@ const Register = () => {
               />
               <input
                 value={input.password}
-                onChange={handleInputRegister}
+                onChange={handleInput}
                 className="border px-4 py-2 w-72 rounded-md"
                 placeholder="Password"
                 name="password"

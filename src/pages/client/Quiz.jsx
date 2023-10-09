@@ -115,7 +115,7 @@ const Quiz = () => {
               <img src="" alt="" />
             </div>
             <p className="text-xl font-semibold">
-              Selamat, Anda telah menyelesaikan kuis! 🏆
+              Congratulations, you have completed the quiz! 🏆
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
